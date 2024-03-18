@@ -1,5 +1,6 @@
-use std::{collections::HashMap, str::FromStr};
+use std::{cmp::Ordering, collections::HashMap, str::FromStr};
 
+#[derive(Debug)]
 pub struct SortedKeySet {
     keys: Vec<(usize, Key)>,
 }
@@ -13,14 +14,19 @@ impl TryFrom<String> for SortedKeySet {
             match keys.get_mut(&key) {
                 Some(mut count) => *count += 1,
                 None => {
-                    keys.insert(key, 0);
+                    keys.insert(key, 1);
                 }
             }
         }
 
-        Ok(SortedKeySet {
-            keys: keys.into_iter().map(|(k, v)| (v, k)).collect(),
-        })
+        let mut keys = keys
+            .into_iter()
+            .map(|(k, v)| (v, k))
+            .collect::<Vec<(usize, Key)>>();
+
+        keys.sort_by(|own, other| other.0.cmp(&own.0));
+
+        Ok(SortedKeySet { keys })
     }
 }
 

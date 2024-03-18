@@ -19,14 +19,10 @@ impl Keyboard {
     pub fn judge(&self, text: impl ToString) -> anyhow::Result<f32> {
         let mut res = 0.0;
         for c in text.to_string().split("") {
-            if c.is_empty() {
+            if c.is_empty() || c == " " {
                 continue;
             }
-            let key = if c == " " {
-                Key::Space
-            } else {
-                Key::from_str(c)?
-            };
+            let key = Key::from_str(c)?;
             for (row_i, row) in self.rows.iter().enumerate() {
                 match row.map.get(&key) {
                     Some(btn) => {
