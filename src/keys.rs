@@ -2,7 +2,7 @@ use std::{cmp::Ordering, collections::HashMap, str::FromStr};
 
 #[derive(Debug)]
 pub struct SortedKeySet {
-    keys: Vec<(usize, Key)>,
+    keys: Vec<(Key, usize)>,
 }
 
 impl TryFrom<String> for SortedKeySet {
@@ -19,12 +19,9 @@ impl TryFrom<String> for SortedKeySet {
             }
         }
 
-        let mut keys = keys
-            .into_iter()
-            .map(|(k, v)| (v, k))
-            .collect::<Vec<(usize, Key)>>();
+        let mut keys = keys.into_iter().collect::<Vec<(Key, usize)>>();
 
-        keys.sort_by(|own, other| other.0.cmp(&own.0));
+        keys.sort_by(|own, other| other.1.cmp(&own.1));
 
         Ok(SortedKeySet { keys })
     }
