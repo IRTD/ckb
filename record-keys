@@ -1,0 +1,3 @@
+filename=/home/irtd/code/rust/ckb/recs/keys-$(date -I)
+sudo logkeys -s -d $(cat event_src) -o $filename --no-daemon
+sudo chown irtd $filename
