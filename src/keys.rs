@@ -10,6 +10,9 @@ impl TryFrom<String> for SortedKeySet {
     fn try_from(value: String) -> anyhow::Result<Self> {
         let mut keys: HashMap<Key, usize> = HashMap::new();
         for c in value.chars() {
+            if [' ', '\n', '\r'].contains(&c) {
+                continue;
+            }
             let key = Key::from_str(&c.to_string())?;
             match keys.get_mut(&key) {
                 Some(mut count) => *count += 1,

@@ -16,8 +16,13 @@ fn main() {
 
     // println!("{:#?}", keys)
 
-    let layout = include_str!("../us.layout");
-    let kb = Keyboard::from_layout(layout).unwrap();
+    // let layout = include_str!("../us.layout");
+    // let kb = Keyboard::from_layout(layout).unwrap();
+
+    println!(
+        "{:#?}",
+        SortedKeySet::try_from(include_str!("./main.rs").to_string())
+    );
 }
 
 fn parse_line(line: impl ToString) -> Option<Key> {
